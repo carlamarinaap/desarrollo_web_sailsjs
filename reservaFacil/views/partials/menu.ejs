@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand bg-black">
+    <div class="container-fluid">
+        <div>
+            <a class="nav-link text-light" href="/">Inicio</a>
+        </div>
+      <% if (session && session.usuario) { %>
+        <div>
+            <span class="px-2 text-white">
+             Hola <%=session.usuario.nombre%>!</span>
+            <a class="btn btn-danger mx-2" href="/cerrar-sesion">Cerrar Sesión</a>
+        </div>
+      <% } else if (session && session.admin) { %>
+        <div>
+            <span class="px-2 text-white">
+              <strong>ADMIN:</strong>
+              Hola <%=session.admin.nombre%>!</span>
+            <a class="btn btn-danger mx-2" href="/admin/cerrar-sesion">Cerrar Sesión</a>
+        </div>
+      <% } else { %>
+        <div>
+            <a class="btn btn-danger mx-2" href="/inicio_sesion">Inicio de Sesión</a>
+            <a class="btn btn-danger" href="/registro">Registro</a>
+        </div>
+      <% } %>
+    </div>
+  </nav>
+  

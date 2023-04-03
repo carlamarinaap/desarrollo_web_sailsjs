@@ -1,0 +1,74 @@
+<div class="container-fluid bg-light m-auto text-center">
+  <h2 class='p-3'>Eventos</h3>
+    <% flash.get('mensaje').forEach(function(msg){ %> 
+    <div class="alert m-3 alert-success text-center" role="alert">
+      <%= msg %>
+    </div>
+    <% }) %>
+    <% flash.get('mensaje2').forEach(function(msg){ %> 
+    <div class="alert m-3 alert-danger text-center" role="alert">
+      <%= msg %>
+    </div>
+    <% }) %>
+
+      <% for (let i = 0; i < eventosActivos.length; i++){ %> 
+      <div class="card bg-light m-3" id="eventos">
+        <h5 class="mt-3 h4"><%= eventosActivos[i].nombre%></h5>  
+        <hr>
+        <div class="row m-0">
+          <div class="col-12 col-md-6 ">
+          <img src="<%= eventosActivos[i].imagen %>" class=" img-fluid rounded-2 m-2" alt="...">
+        </div>
+        <div class="col-12 col-md-6 ">
+          <div class="row m-3">
+          <% for (let j = 0; j < funcionesPorEvento[i].length; j++){ %> 
+          <div class="col col-md-6 ">
+            <div class="card">
+              <div class="card-body">
+                <p class="card-text">Lugar: <%=funcionesPorEvento[i][j].lugar.nombre%> (<%=funcionesPorEvento[i][j].hora%>)</p>
+                <% if (funcionesPorEvento[i][j].capacidad == 0) { %>
+                <p class="rounded card bg-light" >AGOTADA</p>
+                <% } else { %>
+                  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#reserva<%=funcionesPorEvento[i][j].id%>">
+                    Reservar
+                  </button>
+<!-- Inicio del Modal -->
+<div class="modal fade" id="reserva<%=funcionesPorEvento[i][j].id%>" tabindex="-1" aria-labelledby="reservaLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="row modal-header">
+        <div class="col-3">
+          <h1 class="modal-title fs-5" id="reservaLabel">Reserva</h1>
+        </div>
+        <div class="col-8"></div>
+        <div class="col-1">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+      </div>
+      <form action="/reservar-funcion/<%=funcionesPorEvento[i][j].id%>" method="post" >
+        <div class="modal-body">
+          <p><b>Evento: </b><%=funcionesPorEvento[i][j].evento.nombre%></p></p>
+          <p><b>Lugar: </b> <%=funcionesPorEvento[i][j].lugar.nombre%> (Quedan <%=funcionesPorEvento[i][j].capacidad%> lugares)</p>
+          <p><b>Horario: </b> <%=funcionesPorEvento[i][j].hora%></p>
+          <p><b>Seleccione la cantidad de boletos:</b></p>
+          <input type="number" class="form-control" name="asientos" id="asientos" placeholder="0" required/>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger">Aceptar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Fin del Modal -->
+                  <% } %>
+              </div>
+            </div>
+          </div>
+          <% } %> 
+        </div>
+      </div>
+    </div>
+  </div>
+  <% } %>
+</div>

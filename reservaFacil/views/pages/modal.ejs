@@ -1,0 +1,62 @@
+<div class="container-fluid bg-light" >
+  <div class="row m-auto">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <div class="m-2">
+        <div class="panel-title text-center">
+          <h1 class="title cambia-font">Reserva</h1>
+          <hr />
+        </div>
+      </div> 
+      <% flash.get('mensaje').forEach(function(msg){ %> 
+      <div class="alert m-auto alert-warning w-75" role="alert">
+        <%= msg %>
+      </div>
+      <% })  %>
+      <div class="row pl-4 ml-3 w-75 m-auto">
+        <div class="col text-center">
+          <p class="h5" ><b>Usted está por reservar boletos para:</b></p>
+            <form class="m-auto" action="/reservar-funcion/<%=funcion.id%>" method="post">
+              <div class="modal-body">
+                <p><b>Evento:</b> <%=evento.nombre%></p>
+                <p><b>Lugar:</b> <%=lugar.nombre%> (Quedan <%=funcion.capacidad%> lugares)</p>
+                <p><b>Horario:</b> <%=funcion.hora%></p>
+                <p><b>Seleccione la cantidad de boletos:</b></p>
+                <input type="number" class="form-control" name="asientos" id="asientos" placeholder="0" required/>
+              </div>
+                <button type="submit" class="btn btn-danger m-3">Reservar</a>
+            </form>
+          </div>
+      </div>
+    </div>
+</div>
+
+
+
+  <!--    Modal 
+    <div class="modal fade" id="reserva" tabindex="-1" aria-labelledby="reservaLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="row modal-header">
+            <div class="col-3">
+              <h1 class="modal-title fs-5" id="reservaLabel">Reserva</h1>
+            </div>
+            <div class="col-8"></div>
+            <div class="col-1">
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+          </div>
+          <div class="modal-body">
+            <p id="evento" ></p>
+            <p id="lugar"> funcionesPorEvento[i][j].lugar.nombre%> (Quedan funcionesPorEvento[i][j].capacidad%> lugares)</p>
+            <p id="horario"> funcionesPorEvento[i][j].hora%></p>
+            <p><b>Seleccione la cantidad de boletos:</b></p>
+            <input type="number" class="form-control" name="asientos" id="asientos" placeholder="0" required/>
+          </div>
+          <div class="modal-footer">
+            <a href="#" type="submit" class="btn btn-danger">Aceptar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin Modal -->

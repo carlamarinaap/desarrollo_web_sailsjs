@@ -1,0 +1,32 @@
+<img src="images/header_img.jpg" class="img-fluid w-100" alt="...">
+<div class="container-fluid bg-light m-auto">
+  <% flash.get('mensaje').forEach(function(msg){ %> 
+    <div class="alert m-3 alert-success text-center" role="alert">
+      <%= msg %>
+    </div>
+    <% }) %>
+  <div class="text-center">
+    <h3 class='h3 p-4'>¿Sos fan de ir al teatro?</h3>
+    <h5 class="h5">Reservá tu lugar sin costo!</h6>
+    <p class="">Encontrá los mejores eventos en nuestro sitio web!</p>
+    <div class='pb-4'>
+      <a class="btn btn-outline-danger" href="/inicio_sesion">Iniciar Sesión</a>
+      <a class="btn btn-outline-danger" href="/registro">Registrarse</a>
+    </div>
+  </div>
+  <hr>
+  <div class="container m-auto">
+  <h3 class='h3 p-3 text-center'>Eventos</h3>
+  <div class="row m-auto">
+    <% eventos.forEach (evento => { %> 
+      <div class="col p-0">
+        <div class="card m-3 h" style="width: 18rem;">
+          <img src="<%= evento.imagen %>" class="card-img-top p-2" alt="...">
+          <div class="card-body">
+            <h6 class="card-title mb-3 text-center"><%= evento.nombre%></h5>
+          </div>
+        </div>  
+      </div>
+    <%})%>
+  </div>
+</div>

@@ -1,0 +1,73 @@
+<div class="container-fluid bg-light" >
+    <div class="row m-auto">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+      <div class="m-2">
+        <div class="panel-title text-center">
+          <h1 class="title cambia-font">Reserva</h1>
+          <hr />
+        </div>
+      </div> 
+      <% flash.get('mensaje').forEach(function(msg){ %> 
+        <div class="alert m-auto alert-warning w-75" role="alert">
+          <%= msg %>
+        </div>
+      <% }) %>
+      <div class="h4 text-center text-secondary m-4" id="countdown"></div>
+        <div class="row pl-4 ml-3 w-75 m-auto">
+            <div class="col text-center">
+                <p class="h5" ><b>Complete sus datos para confirmar su reserva:</b></p>
+            </div>
+          <form class="m-auto" action="/procesar-reserva/<%=ultimaReserva.id%>" method="post">
+            <div class="form-group mb-3">
+              <label for="email" class="form-label">Email</label>
+              <div class="col">
+                <div class="input-group m-auto">
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Email" required/>
+                </div>
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <label for="telefono" class="form-label">Teléfono</label>
+              <div class="col">
+                <div class="input-group m-auto">
+                  <input type="tel" pattern="[0-9]{10}" class="form-control" name="telefono" id="telefono" placeholder="Ej. 1122223333" required/>
+                </div>
+              </div>
+            </div>
+          <div class="form-group my-3 m-auto text-center">
+            <button type="submit" class="btn btn-danger" id="confirmar">Confirmar</button>
+          </div>
+          <div id="volver" class="form-group my-3 m-auto text-center"></div>
+        </form>
+        <div class="col-md-3"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+
+    var segundos = 60;
+    var minutos = 4;
+    var timer;
+    function cuentaRegresiva() {
+      segundos = segundos - 1
+      if (segundos >= 0) {
+      } else {
+        segundos = 59
+        minutos = minutos - 1
+      }
+      if (minutos == 0 && segundos == 0) {
+        document.getElementById('countdown').innerHTML = 'Tiempo Expirado. Para volver a reservar regrese a la página anterior';
+        clearInterval(timer);
+        const button = document.getElementById('confirmar');
+        button.setAttribute('disabled','');
+        const volver = document.getElementById('volver');
+        volver.innerHTML = `<a href="/espectador" class="btn btn-outline-danger">Volver</a>`
+        return;
+      }
+      document.getElementById('countdown').innerHTML = 'Tiempo: ' + minutos + ' : ' +  segundos;
+    };
+    cuentaRegresiva();
+    var timer = setInterval(cuentaRegresiva, 1000);
+  </script>

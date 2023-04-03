@@ -1,0 +1,373 @@
+<div class="container-fluid m-auto ">
+  <h2 class='p-3 text-center'>Eventos</h3>
+  <% flash.get('mensaje').forEach(function(msg){ %> 
+    <div class="alert m-3 alert-success text-center" role="alert">
+      <%= msg %>
+    </div>
+  <% }) %>
+  <% flash.get('mensaje2').forEach(function(msg){ %> 
+    <div class="alert m-3 alert-danger text-center" role="alert">
+      <%= msg %>
+    </div>
+  <% }) %>
+
+  
+  <% for (let i = 0; i < eventosActivos.length; i++){ %> 
+    <div class="card card-body bg-light my-3">
+    <div class="row">
+      <div class="col col-lg-2 ">
+        <h5 class="mb-3 h4 "><%= eventosActivos[i].nombre%></h5>  
+      </div>
+      <div class="col col-lg-6"></div>
+      <div class="col col-lg-4 d-inline mx-0 my-2">
+        <button class="btn btn-danger btn-sm mb-2 mb-md-0" data-bs-toggle="modal" data-bs-target="#eliminarEvento<%=eventosActivos[i].id%>">
+          Eliminar Evento
+        </button> |
+
+<!-- Inicio del Modal -->
+<div class="modal" tabindex="-1" id="eliminarEvento<%=eventosActivos[i].id%>">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title col-6">Eliminar <%=eventosActivos[i].nombre%></h5>
+        <div class="col-5"></div>
+        <button type="button" class="btn-close col-1" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Está seguro que desea eliminar este evento?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <a  href="/admin/eliminar-evento/<%=eventosActivos[i].id%>" type="button" class="btn btn-danger">Aceptar</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Fin del Modal -->
+
+
+        <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#editarEvento<%=eventosActivos[i].id%>">
+          Editar Evento
+        </button> 
+
+
+<!-- Inicio del Modal -->
+<div class="modal" tabindex="-1" id="editarEvento<%=eventosActivos[i].id%>">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title col-6">Editar Evento</h5>
+        <div class="col-5"></div>
+        <button type="button" class="btn-close col-1" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/admin/editar-evento/<%=eventosActivos[i].id%>" method="post" class=" form-group">
+          <div class="mb-3 mx-auto d-inline">
+            <label for="nombre" class="form-label">Nombre: </label>
+            <input class="" type="text" name="nombre" id="nombre" placeholder="<%=eventosActivos[i].nombre%>" required>
+          </div>
+          <div class="mb-3">
+            <label for="imagen" class="form-label d-inline">Imagen: </label>
+            <img src="../<%=eventosActivos[i].imagen%>" alt="..." class=" img-fluid mb-3 w-75" >
+            <input type="file" class="form-control" name="imagen" id="imagen"required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-danger">Aceptar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Fin del Modal -->
+
+
+      </div>
+    </div>
+    <% for (let j = 0; j < funcionesPorEvento[i].length; j++){ %> 
+      <div class="card card-body bg-light my-3" style="border-color: black;" >
+      <div class="row ">
+        <div class="col col-md-2">
+          <p class="h6">Función: <%=funcionesPorEvento[i][j].lugar.nombre%> </p>
+          <p class="h6">  Horario: <%=funcionesPorEvento[i][j].hora%></p>
+        </div>
+          <div class="col col-md-8">
+          <p class="h6 text-center">Capacidad: <%=funcionesPorEvento[i][j].lugar.capacidad%> | Asientos disponibles: <%=funcionesPorEvento[i][j].capacidad%></p>
+        </div>
+        <div class="col col-md-2">
+          <button  data-bs-toggle="modal" data-bs-target="#eliminarFuncion<%=funcionesPorEvento[i][j].id%>" class="btn btn-sm btn-outline-danger ">
+            Eliminar Función
+          </button>
+
+<!-- Inicio del Modal -->
+<div class="modal" tabindex="-1" id="eliminarFuncion<%=funcionesPorEvento[i][j].id%>">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title col-6">Eliminar Funcion</h5>
+        <div class="col-5"></div>
+        <button type="button" class="btn-close col-1" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Está seguro que desea eliminar esta función?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <a  href="/admin/eliminar-funcion/<%=funcionesPorEvento[i][j].id%>" type="button" class="btn btn-danger">Aceptar</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Fin del Modal -->
+
+        </div>
+        <div class="row">
+        </div>
+        <hr class="m-auto">
+          <h5 class="h5 text-center my-1">Reservas:</h6>
+        <hr class="m-auto">
+          <table class="table table-responsive">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Email</th>
+                <th scope="col">Telefono</th>
+                <th scope="col">Asiento</th>
+              </tr>
+            </thead>
+            <tbody>
+                  <% reservas.forEach (reserva => { %> 
+                  <% if (reserva.funcion.id == funcionesPorEvento[i][j].id) { %>
+                  <% asientos.forEach (asiento => { %> 
+                    <% if (asiento.reserva.id == reserva.id) { %>
+                    <tr>
+                      <th scope="row"><%= reserva.id %> </th>
+                      <td><%= reserva.email %></td>
+                      <td><%= reserva.telefono %></td>
+                      <td>Silla <%= asiento.numero %></td>
+                    </tr>
+                    <% } %>
+                    <% }) %>
+                    <% } %>
+                    <% }) %>
+                  </tbody>
+                </table>
+              </div>
+              
+
+            </div>
+    <% } %> 
+    <button data-bs-toggle="modal" data-bs-target="#agregarFuncion<%=eventosActivos[i].id%>" class="btn btn-outline-danger  m-auto">
+      Agregar Funcion a este evento
+    </button>
+    
+    <!-- Inicio del Modal -->
+    <div class="modal fade" style="margin: 0px" tabindex="-1" id="agregarFuncion<%=eventosActivos[i].id%>">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title col-8">Agregar Funcion</h5>
+            <div class="col-3"></div>
+            <button type="button" class="btn-close col-1" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form action="/admin/agregar-funcion/<%=eventosActivos[i].id%>" method="post" class=" form-group">
+              <div class="mb-3 col">
+                <label for="nombre" class="form-label">Evento: <%=eventosActivos[i].nombre%></label>
+              </div>
+                <div class="mb-3">
+                  <label for="lugares" class="form-label d-inline">Lugar: </label>
+                  <select name="lugares" id="lugares" required>
+                    <option value="">Elija un lugar</option>
+                    <% lugares.forEach (lugar => { %>
+                      <option value="<%=lugar.id%>"><%=lugar.nombre%></option>
+                    <% }) %>
+                  </select>
+              </div>
+                <div class="mb-3">
+                  <label for="horario" class="form-label d-inline">Hora: </label>
+                  <select name="horario" id="horario" required>
+                    <option value="">Elija un horario</option>
+                    <% for (let i = 18; i < 24; i++) { %>
+                      <option value="<%=i%>"><%=i%> hs</option>
+                      <% } %>
+                    </select>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                  <button type="submit" class="btn btn-danger">Aceptar</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+<!-- Fin del Modal -->
+
+  </div>
+  <% } %>
+
+
+  <% for (let i = 0; i < eventosSinFunciones.length; i++){ %> 
+    <div class="card card-body bg-light my-3">
+    <div class="row">
+      <div class="col col-md-2">
+        <h5 class="mb-3 h4"><%= eventosSinFunciones[i].nombre%></h5>  
+      </div>
+      <div class="col col-lg-6"></div>
+      <div class="col col-lg-4 d-inline mx-0 my-2">
+        <button class="btn btn-danger btn-sm mb-2 mb-md-0" data-bs-toggle="modal" data-bs-target="#eliminarEvento<%=eventosSinFunciones[i].id%>">
+          Eliminar Evento
+        </button> |
+
+<!-- Inicio del Modal -->
+<div class="modal" tabindex="-1" id="eliminarEvento<%=eventosSinFunciones[i].id%>">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title col-6">Eliminar <%=eventosSinFunciones[i].nombre%></h5>
+        <div class="col-5"></div>
+        <button type="button" class="btn-close col-1" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Está seguro que desea eliminar este evento?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <a  href="/admin/eliminar-evento/<%=eventosSinFunciones[i].id%>" type="button" class="btn btn-danger">Aceptar</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Fin del Modal -->
+
+
+        <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#editarEvento2<%=eventosSinFunciones[i].id%>">
+          Editar Evento
+        </button> 
+
+
+<!-- Inicio del Modal -->
+<div class="modal" tabindex="-1" id="editarEvento2<%=eventosSinFunciones[i].id%>">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title col-6">Editar Evento</h5>
+        <div class="col-5"></div>
+        <button type="button" class="btn-close col-1" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/admin/editar-evento/<%=eventosSinFunciones[i].id%>" method="post" class=" form-group">
+          <div class="mb-3 col">
+            <label for="nombre" class="form-label">Nombre: </label>
+            <input class=" form-control" type="text" name="nombre" id="nombre" placeholder="<%=eventosSinFunciones[i].nombre%>" required>
+          </div>
+          <p>
+            Imagen:
+          </p>
+       <!---  <img src="../<%=eventosSinFunciones[i].imagen%>" alt="..." class=" img-fluid w-50">-->
+          <div class="mb-3">
+            <label for="imagen" class="form-label d-block">Imagen: </label>
+            <input type="file" class="form-control" name="imagen" id="imagen" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-danger">Aceptar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Fin del Modal -->
+
+
+      </div>
+    </div>
+      <button data-bs-toggle="modal" data-bs-target="#agregarFuncion<%=eventosSinFunciones[i].id%>" class="btn btn-outline-danger  m-auto">
+        Agregar Funcion a este evento
+      </button>
+
+<!-- Inicio del Modal -->
+<div class="modal" tabindex="-1" id="agregarFuncion<%=eventosSinFunciones[i].id%>">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title col-6">Agregar Funcion</h5>
+        <div class="col-5"></div>
+        <button type="button" class="btn-close col-1" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/admin/agregar-funcion/<%=eventosSinFunciones[i].id%>" method="post" class=" form-group">
+          <div class="mb-3 col">
+            <label for="nombre" class="form-label">Evento: </label>
+            <p><%=eventosSinFunciones[i].nombre%></p>
+          </div>
+          <div class="mb-3">
+            <label for="lugares" class="form-label d-block">Lugar: </label>
+            <select name="lugares" id="lugares" required>
+              <option value="">Elija un lugar</option>
+              <% lugares.forEach (lugar => { %>
+                <option value="<%=lugar.id%>"><%=lugar.nombre%></option>
+              <% }) %>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="horario" class="form-label d-block">Lugar: </label>
+            <select name="horario" id="horario" required>
+              <option value="">Elija un horario</option>
+              <% for (let i = 18; i < 24; i++) { %>
+                <option value="<%=i%>"><%=i%> hs</option>
+              <% } %>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-danger">Aceptar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Fin del Modal -->
+  </div>
+  <% } %>
+
+
+
+  <button data-bs-toggle="modal" data-bs-target="#agregarEvento" class="btn btn-danger  m-auto">
+    Agregar Evento
+  </button>
+</div>
+
+<!-- Inicio del Modal -->
+<div class="modal" tabindex="-1" id="agregarEvento">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title col-6">Agregar Evento</h5>
+        <div class="col-5"></div>
+        <button type="button" class="btn-close col-1" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/admin/agregar-evento" method="post" class=" form-group">
+          <div class="mb-3 col">
+            <label for="nombre" class="form-label">Nombre: </label>
+            <input class=" form-control" type="text" name="nombre" id="nombre" placeholder="Nombre del evento" required>
+          </div>
+          <div class="mb-3">
+            <label for="imagen" class="form-label d-block">Imagen: </label>
+            <input type="file" class="form-control" name="imagen" id="imagen" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-danger">Aceptar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Fin del Modal -->

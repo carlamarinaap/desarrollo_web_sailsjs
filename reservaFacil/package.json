@@ -1,0 +1,43 @@
+{
+  "name": "reserva-facil",
+  "private": true,
+  "version": "0.0.0",
+  "description": "a Sails application",
+  "keywords": [],
+  "dependencies": {
+    "@sailshq/connect-redis": "^3.2.1",
+    "@sailshq/lodash": "^3.10.3",
+    "@sailshq/socket.io-redis": "^5.2.0",
+    "bootstrap": "^5.2.3",
+    "grunt": "1.0.4",
+    "lodash": "^4.17.21",
+    "sails": "^1.5.4",
+    "sails-hook-flash": "^0.2.2",
+    "sails-hook-grunt": "^5.0.0",
+    "sails-hook-orm": "^4.0.0",
+    "sails-hook-sockets": "^2.0.0",
+    "sails-postgresql": "^5.0.1",
+    "vue": "^3.2.47"
+  },
+  "devDependencies": {
+    "eslint": "5.16.0",
+    "nodemon": "^2.0.21"
+  },
+  "scripts": {
+    "dev": "nodemon app.js",
+    "start": "NODE_ENV=production node app.js",
+    "test": "npm run lint && npm run custom-tests && echo 'Done.'",
+    "lint": "./node_modules/eslint/bin/eslint.js . --max-warnings=0 --report-unused-disable-directives && echo '✔  Your .js files look good.'",
+    "custom-tests": "echo \"(No other custom tests yet.)\" && echo"
+  },
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/carlamarina/reserva-facil.git"
+  },
+  "author": "carlamarina",
+  "license": "",
+  "engines": {
+    "node": "^19.8"
+  }
+}

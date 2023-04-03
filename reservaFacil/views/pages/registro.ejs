@@ -1,0 +1,49 @@
+<div class="container-fluid bg-light" >
+    <div class="row m-auto">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+      <div class="m-2">
+        <div class="panel-title text-center">
+          <h1 class="title cambia-font">Registrarse</h1>
+          <hr />
+        </div>
+      </div> 
+      <% flash.get('mensaje').forEach(function(msg){ %> 
+        <div class="alert m-auto alert-warning w-75" role="alert">
+          <%= msg %>
+        </div>
+      <% }) %>
+        <div class="row pl-4 ml-3 w-75 m-auto">
+          <form class="m-auto" action="/procesar-registro" method="post">
+            <div class="form-group mb-3">
+              <label for="nombre_usuario" class="form-label">Usuario</label>
+              <div class="col">
+                <div class="input-group m-auto">
+                  <input type="text" class="form-control" name="nombre_usuario" id="nombre_usuario" placeholder="Usuario"/>
+                </div>
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <label for="password" class="form-label">Contraseña</label>
+              <div class="col">
+                <div class="input-group m-auto">
+                  <input type="password" class="form-control" name="password" id="password" placeholder="Contraseña"/>
+                </div>
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <label for="confirm" class="form-label">Confirmar Contraseña</label>
+              <div class="col">
+                <div class="input-group m-auto">
+                  <input type="password" class="form-control" name="confirm" id="confirm" placeholder="Contraseña"/>
+                </div>
+              </div> 
+            </div>
+          <div class="form-group my-3 m-auto text-center">
+            <button type="submit" class="btn btn-danger">Continuar</button>
+          </div>
+        </form>
+        <div class="col-md-3"></div>
+      </div>
+    </div>
+  </div>
